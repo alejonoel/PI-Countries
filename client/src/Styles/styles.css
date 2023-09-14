@@ -1,0 +1,70 @@
+body {
+    position: relative;
+    background-attachment: fixed;
+    background-image: url(https://c.wallhere.com/photos/d0/04/globe_country_ball_geography-587550.jpg!d);
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
+    background-position: center; /* Centra la imagen en el contenedor */
+    display: flex;
+}
+
+.landing {
+    color: white;
+    font-size: xx-large;
+    position: relative;
+    right: 450px;
+}
+
+.landing-buttom {
+    color: white;
+    position: absolute;
+    left: 60px;
+    display: block;
+    font-size: xx-large;
+    border: solid 3px rgb(221, 185, 183);
+    padding: 5px;
+}
+
+.landing-buttom:hover {
+    background-color: rgb(250, 226, 226);
+    color: black;
+    border: solid 3px #79583d;
+    padding: 5px;
+
+}
+
+.navbar-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #79583d;
+}
+
+.navbar-img img {
+    width: 4rem;
+    justify-content: space-around;
+}
+
+.navbar-link {
+    display: flex;
+    justify-content: space-around;
+    width: 15rem;
+}
+
+.form-contenedor {
+    background-color: white;
+    opacity: 80%;
+    width: 40rem;
+    display: flex;
+    justify-content: center;
+}
+
+.form-contenedor-cont {
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+}
+
+.form-error {
+   color: red;
+   font-weight: bold; 
+}
