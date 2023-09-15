@@ -1,7 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import NavBar from '../../Components/NavBar/NavBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCountries } from '../../Redux/Actions'
 
 const Form = () => {
+
+  // Hook que trae la información del estado global
+  const allCountries = useSelector(state => state.allCountries)
+
+  //
+  const dispatch = useDispatch();
+
+  // Simula el ciclo de vida del componente
+  useEffect( () => {
+    // Cuando el componenete se monta
+    dispatch(getCountries())
+    },[])
 
   // Inicializamos el estado donde se guarda los datos cargados
   const [ state , setState] = useState({
@@ -14,11 +28,11 @@ const Form = () => {
 
   // Inicializamos el estado de chequeo de errores
   const [ error , setError] = useState({
-    nombre:"Ingrese el nombre de la actividad",
+    nombre:"Debe ingresar el nombre de la actividad",
     difficulty:"Debe ingresar un número entre 1 y 5",
     duration:"Debe ingresar la hora en formato minutos",
     season:"Debe seleccionar una temporada",
-    countries:"",
+    countries:"Debe seleccionar al menos un país",
   })
   
   // Las condiciones de error
@@ -26,7 +40,7 @@ const Form = () => {
     switch (name) {
       case "nombre":
         if (stateErr.nombre === "") {
-          setError({ ...error, nombre: "El nombre de la actividad es requerido" });
+          setError({ ...error, nombre: "Debe ingresar el nombre de la actividad" });
         } else {
           setError({ ...error, nombre: "" });
         }
@@ -53,7 +67,11 @@ const Form = () => {
         }
         break;
       case "countries":
-        // Lógica de validación para "countries"
+        if (stateErr.countries === "") {
+          setError({ ...error, countries: "Debe seleccionar al menos un país" });
+        } else {
+          setError({ ...error, countries: "" });
+        }
         break;
     }
   };
@@ -73,10 +91,25 @@ const Form = () => {
 
   // LLeva la información cargado en el input al estado
   const handleChange = (event) => {
+
+    // Si es el select countries, guarda en el array los valores
+    if(event.target.name==="countries"){
+
+      // Evita que se guarde la selección repetida
+      if(state.countries.includes(event.target.value)) return
+
+      setState({
+        ...state,
+        // el array countries: una copia del state mas el value
+        [event.target.name]: [...state.countries, event.target.value]
+      })
+    } else {
     setState({
       ...state,
       [event.target.name]: event.target.value
     })
+  }
+
     // El {} evita el delay de re-renderizado
     validate( {...state, [event.target.name]: event.target.value} , event.target.name)
   }
@@ -87,6 +120,13 @@ const Form = () => {
     console.log(state)
   }
 
+  // Borra una selección
+  const handleDelete = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: [...state[event.target.name].filter( i => i!== event.target.id)]
+    })
+  }
 
   return (
     <div>
@@ -94,7 +134,7 @@ const Form = () => {
       <NavBar/>
 
       <div className='form-contenedor'>
-        {console.log(error)}
+        {console.log(state)}
         <form onSubmit={handleSubmit} className='form-contenedor-cont'>
 
           <label>Actividad:</label>
@@ -120,8 +160,19 @@ const Form = () => {
           <label className='form-error'>{error.season}</label>
 
           <label>Seleccionar países </label>
-          <input name='countries' onChange={handleChange} type="text" />
+          <select name="countries" onChange={handleChange}>
+            <option value="">Seleccionar un país</option>
+            {allCountries?.map( (i) => <option key={i.id} value={i.name}>{i.name}</option>)}
+          </select>
           <label className='form-error'>{error.countries}</label>
+          <div>
+            {
+            state.countries.map( (i , index) => <div className='form-selector' key={index}>
+              <label>{i}</label> <button name='countries' id={i} onClick={handleDelete}>x</button>
+            </div>)
+            
+            }
+          </div>
 
           <input disabled={disableFunction()} type="submit" />
         </form>
@@ -130,4 +181,4 @@ const Form = () => {
   )
 }
 
-export default Form
+export default Form;
