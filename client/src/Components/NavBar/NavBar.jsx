@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <div className='navbar-contenedor'>
         <div className='navbar-img'>
-            <img src="navbar.webp" alt="" />
+            <Link to={"/"}><img src="navbar.webp" alt="" /></Link>
         </div>
         <div className='navbar-link'>
             <Link to={"/home"}>Home</Link>

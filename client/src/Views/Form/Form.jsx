@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import NavBar from '../../Components/NavBar/NavBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCountries } from '../../Redux/Actions'
+import { getCountries, postActivity } from '../../Redux/Actions'
 
 const Form = () => {
 
@@ -117,7 +117,7 @@ const Form = () => {
   // Previene que se borren los datos cargados en los campos. Evita la recarga de la página.
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(state)
+    dispatch(postActivity(state))
   }
 
   // Borra una selección

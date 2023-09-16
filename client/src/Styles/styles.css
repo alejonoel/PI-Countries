@@ -4,7 +4,7 @@ body {
     background-image: url(https://c.wallhere.com/photos/d0/04/globe_country_ball_geography-587550.jpg!d);
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
     background-position: center; /* Centra la imagen en el contenedor */
-    display: flex;
+    /* display: flex; */
 }
 
 .landing {
@@ -49,6 +49,41 @@ body {
     justify-content: space-around;
     width: 15rem;
 }
+
+.card-contenedor {
+    position: relative;
+  }
+  
+.card-contenedor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.7;
+    z-index: -1; /* Coloca el pseudo-elemento detrás del contenido */
+  }
+  
+.card-estilo {
+    color: white;
+    opacity: 1;
+    padding: 1rem;
+  }
+  
+.card-imagen {
+    opacity: 1;
+  }
+  
+ .cards-contenedor{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Espaciado uniforme entre las tarjetas */
+        gap: 10px; /* Espacio entre las tarjetas */
+        overflow-x: auto; /* Agregar barra de desplazamiento horizontal si es necesario */
+        padding: 10px; /* Espaciado alrededor del contenedor de tarjetas */  
+ } 
 
 .form-contenedor {
     background-color: white;

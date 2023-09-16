@@ -1,13 +1,13 @@
 const { Country , Activity } = require('../db');
 
-const createActivityController = async ( id , name , difficulty , duration , season , countries) => {
-    const newActivity = await Activity.create({ id , name , difficulty , duration , season });
+const createActivityController = async ( id , nombre , difficulty , duration , season , countries) => {
+    const newActivity = await Activity.create({ id , nombre , difficulty , duration , season });
     
     if (countries && countries.length > 0) {
         // Busca y guarda los paises por su ID
         const postCountries = await Country.findAll({
             // Busca los paises por sus ID
-            where: { id: countries }});
+            where: { name: countries }});
         // Asocia las actividades con los paises
         //* El setCountries funciona por la conjuncion de las tablas muchas a muchas hechas w/sequelize
         await newActivity.setCountries(postCountries); 

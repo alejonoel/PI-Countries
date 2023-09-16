@@ -1,4 +1,4 @@
-import { GET_COUNTRIES } from "../Actions-types/Index";
+import { GET_ACTIVITIES, GET_COUNTRIES } from "../Actions-types/Index";
 
 // Estado inicial
 let initialState = {
@@ -14,6 +14,11 @@ function rootReducer(state=initialState, action){
             return {
                 ...state,
                 allCountries: action.payload
+            }
+        case GET_ACTIVITIES:
+            return {
+                ...state,
+                allActivities: action.payload
             }
     
         default:
