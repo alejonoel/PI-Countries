@@ -52,6 +52,9 @@ body {
 
 .card-contenedor {
     position: relative;
+    width: calc(20% - 2 * 10px); /* Ajusta el ancho de cada tarjeta y considera el espacio horizontal */
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Añade margen inferior para el espacio vertical */
   }
   
 .card-contenedor::before {
@@ -63,26 +66,47 @@ body {
     height: 100%;
     background-color: black;
     opacity: 0.7;
-    z-index: -1; /* Coloca el pseudo-elemento detrás del contenido */
+    z-index: -1; /* Coloca el fondo detrás del contenido */
+  }
+
+  .card-contenedor:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.95); /* Agrega una sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Agrega una transición suave */
   }
   
+  .card-contenedor a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del texto del elemento padre (card-estilo) */
+  }
+
 .card-estilo {
     color: white;
     opacity: 1;
     padding: 1rem;
+    max-height: 100px;
+    white-space: pre-wrap; /* Permite que el texto se divida en varias líneas */
   }
   
 .card-imagen {
     opacity: 1;
+    width: 100%;
+    height: auto;
+  }
+
+.card-imagen img {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho de su contenedor */
+    height: auto; /* Ajusta automáticamente la altura de la imagen para mantener la proporción */
   }
   
  .cards-contenedor{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between; /* Espaciado uniforme entre las tarjetas */
-        gap: 10px; /* Espacio entre las tarjetas */
-        overflow-x: auto; /* Agregar barra de desplazamiento horizontal si es necesario */
-        padding: 10px; /* Espaciado alrededor del contenedor de tarjetas */  
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0; /* Elimina el espacio alrededor del contenedor de tarjetas */
+    align-content: flex-start;
  } 
 
 .form-contenedor {
@@ -110,3 +134,39 @@ body {
     background-color: #79583d;
     padding: .3rem;
 }
+
+.details-conten {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide el contenido en dos columnas iguales */
+    align-items: center;
+    gap: 20px; /* Espacio entre las columnas */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.701); /* Fondo blanco con transparencia */
+    box-shadow: 0 0 10px rgba(250, 248, 248, 0.237); /* Sombra suave */
+
+}
+
+.details-conten img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 6rem;
+}
+
+.details-conten h1 {
+    font-size: 60px;
+    font-weight: bold;
+  }
+
+.details-conten > div:last-child {
+    display: flex;
+    flex-direction: column;
+    color:white;
+    font-weight: bold;
+    font-size: x-large;
+    gap: 10px;
+    padding: 3rem;
+    box-shadow: 0 0 10px rgba(168, 94, 24, 0.942); /* Sombra suave */
+    background-color: #79583d;
+  }
+

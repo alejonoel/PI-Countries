@@ -6,7 +6,7 @@ import { getCountries, postActivity } from '../../Redux/Actions'
 const Form = () => {
 
   // Hook que trae la información del estado global
-  const allCountries = useSelector(state => state.allCountries)
+  const allCountries = useSelector(state => state.allCountriesBackUp)
 
   //
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const Form = () => {
         break;
       case "duration":
         if (isNaN(parseFloat(stateErr.duration))) {
-          setError({ ...error, duration: "Debe ingresar la hora en formato minutos" });
+          setError({ ...error, duration: "Debe ingresar la duración en horas" });
         } else {
           setError({ ...error, duration: "" });
         }
@@ -117,7 +117,21 @@ const Form = () => {
   // Previene que se borren los datos cargados en los campos. Evita la recarga de la página.
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(postActivity(state))
+    dispatch(postActivity(state));
+    setState({
+      nombre:"",
+      difficulty:"",
+      duration:"",
+      season:"",
+      countries:[],
+    })
+    setError({
+      nombre:"Debe ingresar el nombre de la actividad",
+      difficulty:"Debe ingresar un número entre 1 y 5",
+      duration:"Debe ingresar la hora en formato minutos",
+      season:"Debe seleccionar una temporada",
+      countries:"Debe seleccionar al menos un país",
+    });
   }
 
   // Borra una selección
@@ -138,15 +152,15 @@ const Form = () => {
         <form onSubmit={handleSubmit} className='form-contenedor-cont'>
 
           <label>Actividad:</label>
-          <input name='nombre' onChange={handleChange} type="text" />
+          <input name='nombre' onChange={handleChange} type="text" value={state.nombre} />
           <label className='form-error'>{error.nombre}</label>
 
           <label>Dificultad:</label>
-          <input name='difficulty' onChange={handleChange} type="text" />
+          <input name='difficulty' onChange={handleChange} type="text" value={state.difficulty}/>
           <label className='form-error'>{error.difficulty}</label>
 
           <label>Duración:</label>
-          <input name='duration' onChange={handleChange} type="text" />
+          <input name='duration' onChange={handleChange} type="text" value={state.duration}/>
           <label className='form-error'>{error.duration}</label>
 
           <label>Temporada</label>
@@ -170,7 +184,6 @@ const Form = () => {
             state.countries.map( (i , index) => <div className='form-selector' key={index}>
               <label>{i}</label> <button name='countries' id={i} onClick={handleDelete}>x</button>
             </div>)
-            
             }
           </div>
 
