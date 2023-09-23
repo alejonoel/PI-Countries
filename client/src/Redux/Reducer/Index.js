@@ -1,4 +1,4 @@
-import { FILTER, GET_ACTIVITIES, GET_CONTINENTS, GET_COUNTRIES, GET_COUNTRIES_DETAILS, ORDER, PAGINA, RESET } from "../Actions-types/Index";
+import { FILTER, GET_ACTIVITIES, GET_CONTINENTS, GET_COUNTRIES, GET_COUNTRIES_DETAILS, ORDER, PAGINA, RESET, SEARCH } from "../Actions-types/Index";
 
 // Estado inicial
 let initialState = {
@@ -9,7 +9,7 @@ let initialState = {
     countriesFiltrados:[],
     countriesDetails:{},
     filter: false,
-    paginaActual:0,
+    paginaActual:1,
     totalPages:0
 }
 
@@ -39,6 +39,17 @@ function rootReducer(state=initialState, action){
                 ...state,
                 allContinents: action.payload
             }
+        case SEARCH:
+            let searchCountries = [...state.allCountriesBackUp].filter((i)=> 
+            i.name.toLowerCase().includes(action.payload.toLowerCase()));
+            return {
+                ...state,
+                filter: true,
+                countriesFiltrados: searchCountries,
+                allCountries: [...searchCountries].splice(0,10),
+                paginaActual:1,
+                totalPages:Math.ceil(searchCountries.length/10)
+            }
         case FILTER:
             switch (action.payload.type) {
                 case "activity":
@@ -48,10 +59,10 @@ function rootReducer(state=initialState, action){
                         ...state,
                         // some: devuelve un booleano si alguno de los elementos cumple la condición
                         countriesFiltrados: listaActivitiesFiltrados,
-                        allCountries: listaActivitiesFiltrados.splice(0,10),
+                        allCountries: [...listaActivitiesFiltrados].splice(0,10),
                         filter:true,
-                        paginaActual:0,
-                        totalPages:Math.floor(listaActivitiesFiltrados.length/10)
+                        paginaActual:1,
+                        totalPages:Math.ceil(listaActivitiesFiltrados.length/10)
                     }
                 case "continent":
                     let listaFiltrados = [...state.allCountriesBackUp].filter((i)=> 
@@ -59,16 +70,17 @@ function rootReducer(state=initialState, action){
                     return {
                         ...state,
                         countriesFiltrados: listaFiltrados,
-                        allCountries: listaFiltrados.splice(0,10),
+                        allCountries: [...listaFiltrados].splice(0,10),
                         filter:true,
-                        paginaActual:0,
-                        totalPages:Math.floor(listaFiltrados.length/10)
+                        paginaActual:1,
+                        totalPages:Math.ceil(listaFiltrados.length/10)
                     }
             }
             case ORDER:
+                let who = state.filter?[...state.countriesFiltrados]:[...state.allCountriesBackUp]
                 switch (action.payload) {
                     case "AZ":
-                    let asc = [...state.allCountriesBackUp].sort(( primero, segundo ) => {
+                    let asc = who.sort(( primero, segundo ) => {
                         if(primero.name>segundo.name) return 1;
                         if(primero.name<segundo.name) return -1;
                         return 0;
@@ -76,11 +88,12 @@ function rootReducer(state=initialState, action){
                     return{
                         ...state,
                         allCountries: [...asc].splice(0, 10),
-                        allCountriesBackUp: asc,
-                        paginaActual: 0
+                        allCountriesBackUp: state.filter?state.allCountriesBackUp:asc,
+                        countriesFiltrados: state.filter?asc:state.countriesFiltrados,
+                        paginaActual: 1
                     }
                     case "ZA":
-                    let desc = [...state.allCountriesBackUp].sort(( primero, segundo ) => {
+                        let desc = who.sort(( primero, segundo ) => {
                         if(primero.name>segundo.name) return -1;
                         if(primero.name<segundo.name) return 1;
                         return 0;
@@ -88,11 +101,12 @@ function rootReducer(state=initialState, action){
                     return{
                         ...state,
                         allCountries: [...desc].splice(0, 10),
-                        allCountriesBackUp: desc,
-                        paginaActual: 0
+                        allCountriesBackUp: state.filter?state.allCountriesBackUp:desc,
+                        countriesFiltrados: state.filter?desc:state.countriesFiltrados,
+                        paginaActual: 1
                     }
                     case "populationMax":
-                    let max = [...state.allCountriesBackUp].sort(( primero, segundo ) => {
+                        let max = who.sort(( primero, segundo ) => {
                         if(primero.population>segundo.population) return -1;
                         if(primero.population<segundo.population) return 1;
                         return 0;
@@ -100,11 +114,12 @@ function rootReducer(state=initialState, action){
                     return{
                         ...state,
                         allCountries: [...max].splice(0, 10),
-                        allCountriesBackUp: max,
-                        paginaActual: 0
+                        allCountriesBackUp: state.filter?state.allCountriesBackUp:max,
+                        countriesFiltrados: state.filter?max:state.countriesFiltrados,
+                        paginaActual: 1
                     }
                     case "populationMin":
-                    let min = [...state.allCountriesBackUp].sort(( primero, segundo ) => {
+                    let min = who.sort(( primero, segundo ) => {
                         if(primero.population>segundo.population) return 1;
                         if(primero.population<segundo.population) return -1;
                         return 0;
@@ -112,8 +127,9 @@ function rootReducer(state=initialState, action){
                     return{
                         ...state,
                         allCountries: [...min].splice(0, 10),
-                        allCountriesBackUp: min,
-                        paginaActual: 0
+                        allCountriesBackUp: state.filter?state.allCountriesBackUp:min,
+                        countriesFiltrados: state.filter?min:state.countriesFiltrados,
+                        paginaActual: 1
                     }
 
                     default: return state
@@ -123,29 +139,30 @@ function rootReducer(state=initialState, action){
                 ...state,
                 allCountries: [...state.allCountriesBackUp].splice(0,10),
                 filter: false,
-                paginaActual:0,
-                totalPages:Math.floor(state.allCountriesBackUp.length/10)
+                countriesFiltrados:[],
+                paginaActual:1,
+                totalPages:Math.ceil(state.allCountriesBackUp.length/10)
             }
         case PAGINA:
             const next_page = state.paginaActual + 1;
             const prev_page = state.paginaActual - 1;
-            const indice = action.payload === "next" ? next_page * 10 : prev_page * 10;
+            const indice = action.payload === "next" ? state.paginaActual * 10 :(prev_page-1) * 10;
 
             if(state.filter){
                 if(action.payload === "next" && indice >= state.countriesFiltrados.length)
                 return state
-            else if (action.payload === "prev" && prev_page < 0)
+            else if (action.payload === "prev" && prev_page <= 0)
                 return state
             return {
                 ...state,
-                allCountries: [...state.countriesFiltrados].splice(indice,10),
+                allCountries: [...state.countriesFiltrados].splice(indice, 10),
                 paginaActual: action.payload === "next" ? next_page : prev_page
             }
             }
 
             if(action.payload === "next" && indice >= state.allCountriesBackUp.length)
                 return state
-            else if (action.payload === "prev" && prev_page < 0)
+            else if (action.payload === "prev" && prev_page <= 0)
                 return state
 
             return {

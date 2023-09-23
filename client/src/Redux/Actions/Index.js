@@ -57,6 +57,19 @@ export function getActivities(){
         }
     }
 }
+
+export function searchCountries(name){
+    return async function(dispatch){
+        try {
+            dispatch({
+                type: SEARCH,
+                payload: name
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 export function getAllContinents(){
     return async function(dispatch){
         try {

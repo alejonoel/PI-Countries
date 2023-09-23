@@ -4,56 +4,85 @@ body {
     background-image: url(https://c.wallhere.com/photos/d0/04/globe_country_ball_geography-587550.jpg!d);
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
     background-position: center; /* Centra la imagen en el contenedor */
-    /* display: flex; */
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Utiliza la fuente "Lato" */
+    font-weight: bold; /* Aplica el estilo de fuente en negrita */
+    
 }
 
 .landing {
     color: white;
     font-size: xx-large;
     position: relative;
-    right: 450px;
+    margin-top: 40px;
+    right: 350px; ;
 }
 
 .landing-buttom {
+    text-decoration: none;
     color: white;
     position: absolute;
-    left: 60px;
+    left: 25px;
     display: block;
-    font-size: xx-large;
+    font-size: x-large;
     border: solid 3px rgb(221, 185, 183);
-    padding: 5px;
+    padding: 8px;
 }
 
 .landing-buttom:hover {
-    background-color: rgb(250, 226, 226);
+    background-color: rgb(255, 255, 255);
     color: black;
-    border: solid 3px #79583d;
-    padding: 5px;
+    border: solid 3px #79583d00;
+    padding: 8px;
 
 }
 
+.nav-home{
+    display: flex;
+    justify-content: space-between;
+    background-color: #442f1e45;
+    padding: 0.7rem;
+}
 .navbar-contenedor {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #79583d;
+    background-color: #000000b5;
+    box-shadow: 0 0 10px rgba(90, 56, 38, 0.95);
 }
 
 .navbar-img img {
     width: 4rem;
     justify-content: space-around;
+    padding: 5px;
 }
 
 .navbar-link {
-    display: flex;
-    justify-content: space-around;
-    width: 15rem;
+    color: white;
+    display: block;
+    font-size: large;
+    padding: 5px;
+}
+
+.navbar-link:hover{
+    transform: scale(1.02);
+}
+
+.navbar-link a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding: 5px 10px; /* Agrega espacio interno a los enlaces */
+}
+
+.navbar-link-contenedor {
+
 }
 
 .card-contenedor {
     position: relative;
     width: calc(20% - 2 * 10px); /* Ajusta el ancho de cada tarjeta y considera el espacio horizontal */
     box-sizing: border-box;
+    height: 15rem;
     margin-bottom: 10px; /* Añade margen inferior para el espacio vertical */
   }
   
@@ -69,13 +98,13 @@ body {
     z-index: -1; /* Coloca el fondo detrás del contenido */
   }
 
-  .card-contenedor:hover {
+.card-contenedor:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.95); /* Agrega una sombra suave */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.95); /* Agrega una sombra suave */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Agrega una transición suave */
   }
   
-  .card-contenedor a {
+.card-contenedor a {
     text-decoration: none; /* Elimina el subrayado */
     color: inherit; /* Hereda el color del texto del elemento padre (card-estilo) */
   }
@@ -83,7 +112,7 @@ body {
 .card-estilo {
     color: white;
     opacity: 1;
-    padding: 1rem;
+    padding: 0rem;
     max-height: 100px;
     white-space: pre-wrap; /* Permite que el texto se divida en varias líneas */
   }
@@ -95,8 +124,8 @@ body {
   }
 
 .card-imagen img {
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho de su contenedor */
-    height: auto; /* Ajusta automáticamente la altura de la imagen para mantener la proporción */
+    width: 100%; 
+    height: 8rem; 
   }
   
  .cards-contenedor{
@@ -104,9 +133,9 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 10px;
-    overflow-x: auto;
-    padding: 0; /* Elimina el espacio alrededor del contenedor de tarjetas */
-    align-content: flex-start;
+    max-width: 1200px; /* Establece el ancho máximo del contenedor de tarjetas */
+    margin: 0 auto; /* Centra el contenedor horizontalmente en la página */
+    padding: 30px; /* Agrega un espacio interior al contenedor */
  } 
 
 .form-contenedor {

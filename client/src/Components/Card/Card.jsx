@@ -9,8 +9,8 @@ const Card = ({country}) => {
             <img src={country.image} alt="" />
         </div>
         <div className='card-estilo'>
-            <h3>{country.name}</h3>
-            <h4>{country.continent}</h4>
+            <h4>{country.name}</h4>
+            <h5>{country.continent}</h5>
         </div>
         </Link>
     </div>

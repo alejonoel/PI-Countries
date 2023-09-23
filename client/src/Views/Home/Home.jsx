@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector }  from "react-redux"
 import NavBar from '../../Components/NavBar/NavBar';
+import SearchBar from '../../Components/SearchBar/SearchBar';
 import { filterByActivity, filterByContinent, getActivities, getAllContinents, getCountries , order, pagina, reset} from '../../Redux/Actions';
 import Cards from '../../Components/Cards/Cards';
 
@@ -20,6 +21,7 @@ const Home = () => {
       dispatch(getCountries())
       dispatch(getActivities())
       dispatch(getAllContinents())
+      return () => dispatch(reset())
   },[])
 
   const filterActivity = (event) => {
@@ -44,27 +46,34 @@ const Home = () => {
   return (
     <div>
       <div><NavBar/></div>
-      <div>
-        <button onClick={orden} name="AZ">A-Z</button>
-        <button onClick={orden} name="ZA">Z-A</button>
-        <button onClick={orden} name="populationMax">Descending Population</button>
-        <button onClick={orden} name="populationMin">Ascending Population</button>
-      </div>
-      <select onChange={filterActivity} name='filter' id=''>
-        <option value="" >Select Activity</option>
-        {
-          allActivities.map( i => 
-          <option key= {i.id} value={i.nombre}>{i.nombre}</option>)
-        }
-      </select>
-      <select onChange={filterContinent} name='filter' id=''>
-        <option value="">Select Continent</option>
-        {
-          allContinents.map( i => 
-          <option key= {i} value={i}>{i}</option>)
-        }
-      </select>
-      <button onClick={() => {dispatch(reset())}}>Clean filters</button>
+      <div className='nav-home'>
+          <div>
+            <button onClick={orden} name="AZ">A-Z</button>
+            <button onClick={orden} name="ZA">Z-A</button>
+            <button onClick={orden} name="populationMax">🠋 Population</button>
+            <button onClick={orden} name="populationMin">🠉 Population</button>
+          </div>
+
+          <SearchBar/>
+          
+          <div>
+            <select onChange={filterActivity} name='filter' id=''>
+              <option value="" >Select Activity</option>
+              {
+                allActivities.map( i => 
+                <option key= {i.id} value={i.nombre}>{i.nombre}</option>)
+              }
+            </select>
+            <select onChange={filterContinent} name='filter' id=''>
+              <option value="">Select Continent</option>
+              {
+                allContinents.map( i => 
+                <option key= {i} value={i}>{i}</option>)
+              }
+            </select>
+            <button onClick={() => {dispatch(reset())}}>Clean filters</button>
+          </div>
+        </div>
       <Cards allCountries={allCountries}></Cards>
       <div>
         <button name='prev' onClick={pagination}>Prev</button>

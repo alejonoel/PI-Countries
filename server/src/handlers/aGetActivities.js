@@ -5,4 +5,4 @@ const getAllActivities = async ( req , res) => {
     res.json(allActivities)
 }
 
-module.exports = getAllActivities;
+module.exports = getAllActivities; 
