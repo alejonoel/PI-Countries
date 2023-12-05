@@ -5,19 +5,15 @@ import { getCountries, postActivity } from '../../Redux/Actions'
 
 const Form = () => {
 
-  // Hook que trae la información del estado global
   const allCountries = useSelector(state => state.allCountriesBackUp)
 
-  //
   const dispatch = useDispatch();
 
-  // Simula el ciclo de vida del componente
   useEffect( () => {
-    // Cuando el componenete se monta
     dispatch(getCountries())
     },[])
 
-  // Inicializamos el estado donde se guarda los datos cargados
+
   const [ state , setState] = useState({
     nombre:"",
     difficulty:0,
@@ -26,16 +22,16 @@ const Form = () => {
     countries:[],
   })
 
-  // Inicializamos el estado de chequeo de errores
+
   const [ error , setError] = useState({
     nombre:"Debe ingresar el nombre de la actividad",
     difficulty:"Debe ingresar un número entre 1 y 5",
-    duration:"Debe ingresar la hora en formato minutos",
+    duration:"Debe ingresar la duración en horas",
     season:"Debe seleccionar una temporada",
     countries:"Debe seleccionar al menos un país",
   })
-  
-  // Las condiciones de error
+
+
   const validate = (stateErr, name) => {
     switch (name) {
       case "nombre":
@@ -76,7 +72,7 @@ const Form = () => {
     }
   };
   
-  // Función que deshabilita el boton de enviar
+
   const disableFunction = () => {
     let estado = true;
     for( let i in error){
@@ -89,10 +85,9 @@ const Form = () => {
     return estado;
   }
 
-  // LLeva la información cargado en el input al estado
+
   const handleChange = (event) => {
 
-    // Si es el select countries, guarda en el array los valores
     if(event.target.name==="countries"){
 
       // Evita que se guarde la selección repetida
@@ -114,7 +109,6 @@ const Form = () => {
     validate( {...state, [event.target.name]: event.target.value} , event.target.name)
   }
   
-  // Previene que se borren los datos cargados en los campos. Evita la recarga de la página.
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(postActivity(state));
@@ -128,13 +122,13 @@ const Form = () => {
     setError({
       nombre:"Debe ingresar el nombre de la actividad",
       difficulty:"Debe ingresar un número entre 1 y 5",
-      duration:"Debe ingresar la hora en formato minutos",
+      duration:"Debe ingresar la duración en horas",
       season:"Debe seleccionar una temporada",
       countries:"Debe seleccionar al menos un país",
     });
   }
 
-  // Borra una selección
+  
   const handleDelete = (event) => {
     setState({
       ...state,
@@ -148,7 +142,7 @@ const Form = () => {
       <NavBar/>
 
       <div className='form-contenedor'>
-        {console.log(state)}
+        
         <form onSubmit={handleSubmit} className='form-contenedor-cont'>
 
           <label>Actividad:</label>
@@ -156,7 +150,7 @@ const Form = () => {
           <label className='form-error'>{error.nombre}</label>
 
           <label>Dificultad:</label>
-          <input name='difficulty' onChange={handleChange} type="text" value={state.difficulty}/>
+          <input name='difficulty' onChange={handleChange} type="number" value={state.difficulty}/>
           <label className='form-error'>{error.difficulty}</label>
 
           <label>Duración:</label>
@@ -179,6 +173,9 @@ const Form = () => {
             {allCountries?.map( (i) => <option key={i.id} value={i.name}>{i.name}</option>)}
           </select>
           <label className='form-error'>{error.countries}</label>
+
+          <input disabled={disableFunction()} type="submit" />
+        </form>
           <div>
             {
             state.countries.map( (i , index) => <div className='form-selector' key={index}>
@@ -186,9 +183,6 @@ const Form = () => {
             </div>)
             }
           </div>
-
-          <input disabled={disableFunction()} type="submit" />
-        </form>
       </div>
     </div>
   )

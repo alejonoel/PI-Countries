@@ -1,5 +1,3 @@
-// Handler que obtiene el detalle de un pais por su ID
-
 const { Country , Activity } = require('../db');
 
 const getDetailByID = async ( req , res ) => {
@@ -10,6 +8,7 @@ const getDetailByID = async ( req , res ) => {
         // Pedirle a la query que incluya los elementos de la relacion muchos a muchos
         include: {
             model: Activity,
+            attributes:['nombre'],
             // through no toma la relación de muchos a muchos de la tabla
             through: { attributes: [] }},
     })

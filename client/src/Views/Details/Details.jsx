@@ -29,6 +29,7 @@ const Details = () => {
             <label >Capital: {countryDetails.capital}</label>
             <label >Area: {countryDetails.area}</label>
             <label >Population: {countryDetails.population}</label>
+            <label >Activities: {countryDetails.Activities.map( i => i.nombre )}</label>
           </div>
         </div>
     </div>

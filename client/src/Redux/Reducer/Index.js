@@ -27,7 +27,6 @@ function rootReducer(state=initialState, action){
             return {
                 ...state,
                 countriesDetails: action.payload,
-                totalPages: 0
             }
         case GET_ACTIVITIES:
             return {
@@ -40,8 +39,10 @@ function rootReducer(state=initialState, action){
                 allContinents: action.payload
             }
         case SEARCH:
+
             let searchCountries = [...state.allCountriesBackUp].filter((i)=> 
             i.name.toLowerCase().includes(action.payload.toLowerCase()));
+
             return {
                 ...state,
                 filter: true,
@@ -50,6 +51,7 @@ function rootReducer(state=initialState, action){
                 paginaActual:1,
                 totalPages:Math.ceil(searchCountries.length/10)
             }
+
         case FILTER:
             switch (action.payload.type) {
                 case "activity":
@@ -76,7 +78,7 @@ function rootReducer(state=initialState, action){
                         totalPages:Math.ceil(listaFiltrados.length/10)
                     }
             }
-            case ORDER:
+        case ORDER:
                 let who = state.filter?[...state.countriesFiltrados]:[...state.allCountriesBackUp]
                 switch (action.payload) {
                     case "AZ":

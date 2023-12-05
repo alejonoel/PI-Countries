@@ -1,5 +1,3 @@
-// Handler que trae todos los paises
-
 const { Country , Activity } = require('../db');
 
 const getAllCountries = async ( req , res) => {

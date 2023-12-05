@@ -4,12 +4,10 @@ const createActivityController = async ( id , nombre , difficulty , duration , s
     const newActivity = await Activity.create({ id , nombre , difficulty , duration , season });
     
     if (countries && countries.length > 0) {
-        // Busca y guarda los paises por su ID
         const postCountries = await Country.findAll({
-            // Busca los paises por sus ID
             where: { name: countries }});
-        // Asocia las actividades con los paises
-        //* El setCountries funciona por la conjuncion de las tablas muchas a muchas hechas w/sequelize
+            
+        //* El setCountries agrega los valores a la tabla de relacion muchas a muchas
         await newActivity.setCountries(postCountries); 
         return newActivity;
       } else {

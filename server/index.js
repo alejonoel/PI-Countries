@@ -5,7 +5,7 @@ const PORT = 3001;
 const cargarBD = require('./src/controllers/cargarBD');
 
 conn.sync({ force: true })
-.then(() => cargarBD())
+.then(() => cargarBD()) 
 .then(() => {
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

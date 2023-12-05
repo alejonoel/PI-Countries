@@ -1,7 +1,7 @@
 body {
     position: relative;
     background-attachment: fixed;
-    background-image: url(https://c.wallhere.com/photos/d0/04/globe_country_ball_geography-587550.jpg!d);
+     background-image: url('background.jpg');
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
     background-position: center; /* Centra la imagen en el contenedor */
     font-family: Georgia, 'Times New Roman', Times, serif; /* Utiliza la fuente "Lato" */
@@ -74,9 +74,6 @@ body {
     padding: 5px 10px; /* Agrega espacio interno a los enlaces */
 }
 
-.navbar-link-contenedor {
-
-}
 
 .card-contenedor {
     position: relative;
@@ -162,6 +159,40 @@ body {
     font-weight: bold;
     background-color: #79583d;
     padding: .3rem;
+}
+
+.filter-button {
+    background-color: #2e141480;
+    color: #ffffff;
+    padding: 0.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filter-button.active {
+    background-color: #513628;
+    color: white;
+  }
+  
+  .filter-button:hover {
+    background-color: rgba(255, 255, 255, 0.303);
+    color: #513628;
+  }
+
+.action-button{
+    background-color: #2e141480;
+    color: #ffffff;
+    padding: 0.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: .2rem;
+    box-shadow: 0 0 10px rgba(90, 56, 38, 0.639);
+}
+
+.action-button:hover {
+    background-color: #6e3518;
 }
 
 .details-conten {

@@ -15,9 +15,7 @@ const Home = () => {
   const totalPaginas = useSelector(state => state.totalPages);
 
 
-  // Simula el ciclo de vida del componente
   useEffect( () => {
-      // Cuando el componenete se monta
       dispatch(getCountries())
       dispatch(getActivities())
       dispatch(getAllContinents())
@@ -25,7 +23,6 @@ const Home = () => {
   },[])
 
   const filterActivity = (event) => {
-    console.log(event.target.value)
     dispatch(filterByActivity(event.target.value))
   }
 
@@ -37,8 +34,8 @@ const Home = () => {
     dispatch(order(event.target.name))
   }
 
-  const pagination = (e) =>{
-    dispatch(pagina(e.target.name))
+  const pagination = (event) =>{
+    dispatch(pagina(event.target.name))
   }
 
 
@@ -48,37 +45,37 @@ const Home = () => {
       <div><NavBar/></div>
       <div className='nav-home'>
           <div>
-            <button onClick={orden} name="AZ">A-Z</button>
-            <button onClick={orden} name="ZA">Z-A</button>
-            <button onClick={orden} name="populationMax">🠋 Population</button>
-            <button onClick={orden} name="populationMin">🠉 Population</button>
+            <button className='action-button' onClick={orden} name="AZ">A-Z</button>
+            <button className='action-button' onClick={orden} name="ZA">Z-A</button>
+            <button className='action-button' onClick={orden} name="populationMax">🠋 Population</button>
+            <button className='action-button' onClick={orden} name="populationMin">🠉 Population</button>
           </div>
 
           <SearchBar/>
           
           <div>
-            <select onChange={filterActivity} name='filter' id=''>
+            <select className='filter-button' onChange={filterActivity} name='filter' id=''>
               <option value="" >Select Activity</option>
               {
                 allActivities.map( i => 
                 <option key= {i.id} value={i.nombre}>{i.nombre}</option>)
               }
             </select>
-            <select onChange={filterContinent} name='filter' id=''>
+            <select className='filter-button' onChange={filterContinent} name='filter' id=''>
               <option value="">Select Continent</option>
               {
                 allContinents.map( i => 
                 <option key= {i} value={i}>{i}</option>)
               }
             </select>
-            <button onClick={() => {dispatch(reset())}}>Clean filters</button>
+            <button className='action-button' onClick={() => {dispatch(reset())}}>Clean filters</button>
           </div>
         </div>
       <Cards allCountries={allCountries}></Cards>
       <div>
-        <button name='prev' onClick={pagination}>Prev</button>
+        <button className='action-button' name='prev' onClick={pagination}>Prev</button>
         <label>Page {paginaActual} of {totalPaginas}</label>
-        <button name='next' onClick={pagination}>Next</button>
+        <button className='action-button' name='next' onClick={pagination}>Next</button>
       </div>
     </div>
     
